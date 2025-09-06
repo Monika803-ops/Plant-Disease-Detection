@@ -1,17 +1,21 @@
 import streamlit as st
 import numpy as np
 import cv2
-import os
 from tensorflow.keras.models import load_model
 
 # Load trained model
 model = load_model("models/plant_disease_model.h5")
 
-# Class names
-dataset_path = "D:\\AI_ML_Intership\\Plant_Disease_Detection\\dataset"
-class_names = sorted(os.listdir(dataset_path))
+# Class names (hardcoded instead of reading from dataset folder)
+class_names = [
+    "Tomato___Bacterial_spot",
+    "Tomato___Early_blight",
+    "Tomato___Late_blight",
+    "Tomato___Leaf_Mold",
+    "Tomato___Healthy"
+]
 
-st.title("Plant Disease Detection")
+st.title(" Plant Disease Detection")
 st.write("Upload a leaf image and the model will predict the disease.")
 
 uploaded_file = st.file_uploader("Choose a leaf image...", type=["jpg", "jpeg", "png"])
@@ -32,5 +36,6 @@ if uploaded_file is not None:
     class_id = np.argmax(prediction)
     confidence = np.max(prediction)
 
-    st.write(f"  Prediction: *{class_names[class_id]}*")
-    st.write(f"   Confidence: *{confidence*100:.2f}%*")
+    st.subheader("🔍 Prediction Result")
+    st.write(f"**Disease:** {class_names[class_id]}")
+    st.write(f"**Confidence:** {confidence*100:.2f}%")
