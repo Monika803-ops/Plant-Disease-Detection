@@ -36,6 +36,7 @@ if uploaded_file is not None:
     class_id = np.argmax(prediction)
     confidence = np.max(prediction)
 
-    st.subheader("🔍 Prediction Result")
+    st.subheader(" Prediction Result")
     st.write(f"**Disease:** {class_names[class_id]}")
     st.write(f"**Confidence:** {confidence*100:.2f}%")
+
